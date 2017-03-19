@@ -3,26 +3,31 @@ package com.github.vishalkukreja.java.multithreading;
 public class MultithreadJoinDemo {
 
 	private int pointsCount;
+
+	public synchronized void increasePoints() {
+		pointsCount++;
+	}
+
 	public static void main(String[] args) {
 		MultithreadJoinDemo level = new MultithreadJoinDemo();
 		level.countPoints();
-
 	}
+
 	public void countPoints() {
-		final int POINTS = 1000; 
+		final int POINTS = 1000;
 		Thread thr1 = new Thread(new Runnable() {
-			
+
 			public void run() {
 				for (int i = 1; i <= POINTS; i++) {
-					pointsCount++;
+					increasePoints();
 				}
 			}
 		});
 		Thread thr2 = new Thread(new Runnable() {
-			
+
 			public void run() {
 				for (int i = 1; i <= POINTS; i++) {
-					pointsCount++;
+					increasePoints();
 				}
 			}
 		});
@@ -34,6 +39,6 @@ public class MultithreadJoinDemo {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		System.out.println("Total points: "+pointsCount);
+		System.out.println("Total points: " + pointsCount);
 	}
 }
